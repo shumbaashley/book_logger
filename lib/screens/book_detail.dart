@@ -179,7 +179,7 @@ class _BookDetailState extends State<BookDetail> {
   }
 
   void updateAuthor() {
-    book.title = bookAuthor.text;
+    book.author = bookAuthor.text;
   }
 
   void _delete() async {

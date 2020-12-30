@@ -1,12 +1,29 @@
 import 'package:flutter/material.dart';
 
 class BookDetail extends StatefulWidget {
+  String appBarTitle;
+
+  BookDetail(this.appBarTitle);
+
   @override
-  _BookDetailState createState() => _BookDetailState();
+  _BookDetailState createState() => _BookDetailState(this.appBarTitle);
 }
 
 class _BookDetailState extends State<BookDetail> {
-  static const _indicators = ["Haven't yet started", "In Progress", "Completed"];
+  
+  String appBarTitle;
+
+
+  _BookDetailState(this.appBarTitle);
+
+  
+  static const _indicators = [
+    "Haven't yet started",
+    "In Progress",
+    "Completed"
+  ];
+
+
   @override
   Widget build(BuildContext context) {
     TextStyle textStyle = Theme.of(context).textTheme.bodyText2;
@@ -16,7 +33,7 @@ class _BookDetailState extends State<BookDetail> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Edit Book'),
+        title: Text(appBarTitle),
       ),
       body: Padding(
         padding: EdgeInsets.only(top: 15.0, left: 10.0, right: 10.0),
@@ -86,9 +103,9 @@ class _BookDetailState extends State<BookDetail> {
                     },
                   ),
                 ),
-
-                Container(width: 5.0,),
-
+                Container(
+                  width: 5.0,
+                ),
                 Expanded(
                   child: RaisedButton(
                     color: Theme.of(context).primaryColorDark,

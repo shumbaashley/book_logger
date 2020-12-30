@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
       title: 'Book Logger',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.amber,
+        primarySwatch: Colors.brown,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: BookList(),

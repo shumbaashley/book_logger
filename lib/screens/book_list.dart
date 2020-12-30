@@ -1,3 +1,4 @@
+import 'package:book_logger/screens/book_detail.dart';
 import 'package:flutter/material.dart';
 
 class BookList extends StatefulWidget {
@@ -18,6 +19,7 @@ class BookListState extends State<BookList> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           debugPrint("Button Tapped");
+          goToDetail('Add Book');
         },
         tooltip: 'Add Book',
         child: Icon(Icons.add),
@@ -50,10 +52,17 @@ class BookListState extends State<BookList> {
             ),
             onTap: () {
               print('Card Tapped');
+              goToDetail('Edit Book');
             },
           ),
         );
       },
     );
+  }
+
+  void goToDetail(String title) {
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return BookDetail(title);
+    }));
   }
 }

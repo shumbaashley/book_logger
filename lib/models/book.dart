@@ -7,8 +7,8 @@ class Book {
   String _dateStarted;
   String _dateFinished;
 
-  Book(this._status, this._title, this._author, this._dateAdded,
-      [this._dateFinished, this._dateStarted]);
+  Book(this._status, this._title, this._author, [this._dateAdded,
+      this._dateFinished, this._dateStarted]);
 
   Book.withId(
       this._id, this._status, this._title, this._author, this._dateAdded,

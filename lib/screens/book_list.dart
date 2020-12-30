@@ -1,3 +1,6 @@
+import 'package:book_logger/models/book.dart';
+import 'package:book_logger/utils/helper.dart';
+import 'package:sqflite/sqflite.dart';
 import 'package:book_logger/screens/book_detail.dart';
 import 'package:flutter/material.dart';
 
@@ -9,17 +12,24 @@ class BookList extends StatefulWidget {
 }
 
 class BookListState extends State<BookList> {
+  DatabaseHelper databaseHelper = DatabaseHelper();
+  List<Book> bookList;
   int count = 0;
 
   @override
   Widget build(BuildContext context) {
+    if (bookList == null) {
+      bookList = List<Book>();
+      updateListView();
+    }
+
     return Scaffold(
       appBar: AppBar(title: Text('Books')),
       body: getBookListView(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           debugPrint("Button Tapped");
-          goToDetail('Add Book');
+          goToDetail(Book(3, '', ''), 'Add Book');
         },
         tooltip: 'Add Book',
         child: Icon(Icons.add),
@@ -38,21 +48,24 @@ class BookListState extends State<BookList> {
           elevation: 2.0,
           child: ListTile(
             leading: CircleAvatar(
-              backgroundColor: Colors.yellow,
-              child: Icon(Icons.book),
-            ),
+                backgroundColor: getStatusColor(this.bookList[position].status),
+                child: getStatusIcon(this.bookList[position].status)),
             title: Text(
-              'The 4 Hour Work Week',
+              this.bookList[position].title,
               style: titleStyle,
             ),
-            subtitle: Text('Timothy Ferriss'),
-            trailing: Icon(
-              Icons.edit,
-              color: Colors.grey,
-            ),
+            subtitle: Text(this.bookList[position].dateAdded),
+            trailing: GestureDetector(
+                child: Icon(
+                  Icons.edit,
+                  color: Colors.grey,
+                ),
+                onTap: () {
+                  print(this.bookList[position].id);
+                }),
             onTap: () {
               print('Card Tapped');
-              goToDetail('Edit Book');
+              goToDetail(this.bookList[position], 'Edit Book');
             },
           ),
         );
@@ -60,9 +73,71 @@ class BookListState extends State<BookList> {
     );
   }
 
-  void goToDetail(String title) {
-    Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return BookDetail(title);
+  Color getStatusColor(int status) {
+    switch (status) {
+      case 1:
+        return Colors.red;
+        break;
+      case 2:
+        return Colors.yellow;
+        break;
+      case 3:
+        return Colors.green;
+        break;
+      default:
+        return Colors.red;
+        break;
+    }
+  }
+
+  Icon getStatusIcon(int status) {
+    switch (status) {
+      case 1:
+        return Icon(Icons.book);
+        break;
+      case 2:
+        return Icon(Icons.book_online);
+        break;
+      case 3:
+        return Icon(Icons.bookmark);
+        break;
+      default:
+        return Icon(Icons.book);
+        break;
+    }
+  }
+
+  void _delete(BuildContext context, Book book) async {
+    int result = await databaseHelper.deleteBook(book.id);
+    if (result != 0) {
+      _showSnackBar(context, 'Note successfully deleted');
+      updateListView();
+    }
+  }
+
+  void _showSnackBar(BuildContext context, String message) {
+    final snackBar = SnackBar(content: Text(message));
+    Scaffold.of(context).showSnackBar(snackBar);
+  }
+
+  void updateListView() async {
+    final Database db = await databaseHelper.initializeDatabase();
+    List<Book> bookList = await databaseHelper.getBookList();
+
+    setState(() {
+      this.bookList = bookList;
+      this.count = bookList.length;
+    });
+  }
+
+  void goToDetail(Book book, String title) async {
+    bool result =
+        await Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return BookDetail(book, title);
     }));
+
+    if (result == true) {
+      updateListView();
+    }
   }
 }

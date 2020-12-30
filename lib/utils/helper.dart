@@ -14,7 +14,7 @@ class DatabaseHelper {
   String title = 'title';
   String author = 'author';
   String status = 'status';
-  String dateAdded = 'status';
+  String dateAdded = 'dateAdded';
 
   factory DatabaseHelper() {
     if (_databaseHelper == null) {
@@ -44,7 +44,7 @@ class DatabaseHelper {
 
   void _createDb(Database db, int newVersion) async {
     await db.execute(
-        'CREATE TABLE $bookTable($id INTEGER PRIMARY KEY AUTO INCREMENT, $title TEXT, $author TEXT, $status INTEGER, $dateAdded TEXT)');
+        'CREATE TABLE $bookTable($id INTEGER PRIMARY KEY AUTOINCREMENT, $title TEXT, $author TEXT, $status INTEGER, $dateAdded TEXT)');
   }
 
   // Get all book objects from db
@@ -90,5 +90,19 @@ class DatabaseHelper {
         await db.rawQuery('SELECT COUNT (*) FROM $bookTable');
     int result = Sqflite.firstIntValue(x);
     return result;
+  }
+
+  // Get Map List and convert it to Book List
+  Future<List<Book>> getBookList() async {
+    var bookMapList = await getBookMapList();
+    int count = bookMapList.length;
+
+    List<Book> bookList = List<Book>();
+
+    for (int i = 0; i < count; i++) {
+      bookList.add(Book.fromMapObject(bookMapList[i]));
+    }
+
+    return bookList;
   }
 }

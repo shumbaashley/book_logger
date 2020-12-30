@@ -47,9 +47,48 @@ class DatabaseHelper {
         'CREATE TABLE $bookTable($id INTEGER PRIMARY KEY AUTO INCREMENT, $title TEXT, $author TEXT, $status INTEGER, $dateAdded TEXT)');
   }
 
-  // Get all books from db
+  // Get all book objects from db
+
+  Future<List<Map<String, dynamic>>> getBookMapList() async {
+    Database db = await this.database;
+
+    // var result = await db.rawQuery('SELECT * FROM  $bookTable ORDER BY $status ASC')
+    var result = await db.query(bookTable, orderBy: '$status ASC');
+    return result;
+  }
   // Insert book into db
+
+  Future<int> insertBook(Book book) async {
+    Database db = await this.database;
+    var result = await db.insert(bookTable, book.toMap());
+    return result;
+  }
+
   // Get single book from db
+
+  Future<int> updateBook(Book book) async {
+    Database db = await this.database;
+    var result = await db.update(bookTable, book.toMap(),
+        where: '$id = ?', whereArgs: [book.id]);
+    return result;
+  }
+
   // Delete single book from db
-  // Get books from db
+
+  Future<int> deleteBook(int id) async {
+    Database db = await this.database;
+    var result = await db.rawDelete('DELETE FROM $bookTable WHERE $id = id');
+    return result;
+  }
+
+  // Get count of books from db
+
+  Future<int> getCount(int id) async {
+    Database db = await this.database;
+
+    List<Map<String, dynamic>> x =
+        await db.rawQuery('SELECT COUNT (*) FROM $bookTable');
+    int result = Sqflite.firstIntValue(x);
+    return result;
+  }
 }

@@ -24,7 +24,7 @@ class BookListState extends State<BookList> {
     }
 
     return Scaffold(
-      appBar: AppBar(title: Text('Books')),
+      appBar: AppBar(title: Text('Book Reading List')),
       body: getBookListView(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -62,6 +62,7 @@ class BookListState extends State<BookList> {
                 ),
                 onTap: () {
                   print(this.bookList[position].id);
+                  goToDetail(this.bookList[position], 'Edit Book');
                 }),
             onTap: () {
               print('Card Tapped');
@@ -76,16 +77,16 @@ class BookListState extends State<BookList> {
   Color getStatusColor(int status) {
     switch (status) {
       case 1:
-        return Colors.red;
+        return Colors.deepPurple;
         break;
       case 2:
-        return Colors.yellow;
+        return Colors.yellowAccent;
         break;
       case 3:
-        return Colors.green;
+        return Colors.lightGreenAccent;
         break;
       default:
-        return Colors.red;
+        return Colors.deepPurple;
         break;
     }
   }
@@ -96,10 +97,10 @@ class BookListState extends State<BookList> {
         return Icon(Icons.book);
         break;
       case 2:
-        return Icon(Icons.book_online);
+        return Icon(Icons.local_library);
         break;
       case 3:
-        return Icon(Icons.bookmark);
+        return Icon(Icons.check_circle);
         break;
       default:
         return Icon(Icons.book);

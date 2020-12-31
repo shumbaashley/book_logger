@@ -1,4 +1,4 @@
-import 'package:book_logger/screens/book_list.dart';
+import 'package:book_logger/screens/splash.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -13,10 +13,10 @@ class MyApp extends StatelessWidget {
       title: 'Book Logger',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.brown,
+        primarySwatch: Colors.blueGrey,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: BookList(),
+      home: SplashWidget(),
     );
   }
 }

@@ -22,7 +22,7 @@ class _SplashWidgetState extends State<SplashWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Color(0xff191927),
       body: SafeArea(
         child: Center(
           child: Container(
@@ -48,3 +48,12 @@ class _SplashWidgetState extends State<SplashWidget> {
     );
   }
 }
+
+
+
+
+
+
+
+
+// #191927

@@ -159,7 +159,7 @@ class _BookDetailState extends State<BookDetail> {
   }
 
   String getStatusAsString(int value) {
-    String status;
+    String status = _statuses[0];
     switch (value) {
       case 1:
         status = _statuses[0];

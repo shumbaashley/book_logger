@@ -22,7 +22,7 @@ class _BookDetailState extends State<BookDetail> {
 
   TextEditingController bookTitle = TextEditingController();
   TextEditingController bookAuthor = TextEditingController();
-  static const _statuses = ["Haven't yet started", "In Progress", "Completed"];
+  static const _statuses = ["Haven't started yet", "Currently In Progress", "Completed/Done"];
 
   @override
   Widget build(BuildContext context) {

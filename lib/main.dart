@@ -18,13 +18,13 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
         appBarTheme: AppBarTheme(
           textTheme: TextTheme(
-            headline6: TextStyleFamily
+            headline6: AppBarTextStyle
           ),
         ),
         textTheme: TextTheme(
-          headline6: TextStyleFamily,
-          bodyText2 : TextStyleFamily,
-          subtitle1 : TextStyleFamily
+          headline6: AppBarTextStyle,
+          bodyText2 : BodyTextStyle,
+          subtitle1 : BodyTextStyle
         )
       ),
       home: SplashWidget(),

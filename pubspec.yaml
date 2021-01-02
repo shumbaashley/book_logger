@@ -36,6 +36,7 @@ dev_dependencies:
   path_provider: ^1.6.24
   intl: ^0.16.1
   percent_indicator: ^2.1.9
+  url_launcher: ^5.7.10
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 

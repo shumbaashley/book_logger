@@ -1,5 +1,6 @@
 import 'package:book_logger/models/book.dart';
 import 'package:book_logger/utils/helper.dart';
+import 'package:book_logger/widgets/navdrawer.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -22,7 +23,11 @@ class _BookDetailState extends State<BookDetail> {
 
   TextEditingController bookTitle = TextEditingController();
   TextEditingController bookAuthor = TextEditingController();
-  static const _statuses = ["Haven't started yet", "Currently In Progress", "Completed/Done"];
+  static const _statuses = [
+    "Haven't started yet",
+    "Currently In Progress",
+    "Completed/Done"
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -45,6 +50,7 @@ class _BookDetailState extends State<BookDetail> {
               },
             ),
           ),
+          drawer: NavbarDrawer(),
           body: Padding(
             padding: EdgeInsets.only(top: 15.0, left: 10.0, right: 10.0),
             child: ListView(
@@ -103,8 +109,9 @@ class _BookDetailState extends State<BookDetail> {
                   child: Row(children: <Widget>[
                     Expanded(
                       child: RaisedButton(
+                        padding: EdgeInsets.all(8.0),
                         color: Theme.of(context).primaryColorDark,
-                        textColor: Theme.of(context).primaryColorLight,
+                        textColor: Colors.white,
                         child: Text(
                           'Save',
                           textScaleFactor: 1.5,
@@ -122,8 +129,9 @@ class _BookDetailState extends State<BookDetail> {
                     ),
                     Expanded(
                       child: RaisedButton(
-                        color: Theme.of(context).primaryColorDark,
-                        textColor: Theme.of(context).primaryColorLight,
+                        padding: EdgeInsets.all(8.0),
+                        color: Colors.red,
+                        textColor: Colors.white,
                         child: Text(
                           'Delete',
                           textScaleFactor: 1.5,

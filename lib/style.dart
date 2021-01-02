@@ -11,10 +11,17 @@ const AppBarTextStyle = TextStyle(
     color: Colors.white
 );
 
+const NavBarTextStyle = TextStyle(
+    fontFamily: FontFamily,
+    fontWeight: FontWeight.w300,
+    fontSize: LargeTextSize,
+    color: Colors.white
+);
+
 
 const BodyTextStyle = TextStyle(
     fontFamily: FontFamily,
     fontWeight: FontWeight.w300,
     fontSize: SmallTextSize,
-    color: Colors.white
+    color: Colors.black
 );

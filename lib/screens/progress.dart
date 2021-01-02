@@ -1,5 +1,7 @@
 import 'package:book_logger/models/book.dart';
 import 'package:book_logger/utils/helper.dart';
+import 'package:book_logger/widgets/navdrawer.dart';
+import 'package:book_logger/widgets/textsection.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
@@ -22,6 +24,8 @@ class _ProgressState extends State<Progress> {
 
   @override
   Widget build(BuildContext context) {
+    TextStyle bodyText = Theme.of(context).textTheme.subtitle1;
+
     if (bookList == null || completedBookList == null) {
       bookList = List<Book>();
       completedBookList = List<Book>();
@@ -29,29 +33,30 @@ class _ProgressState extends State<Progress> {
     }
 
     return Scaffold(
-      appBar: new AppBar(
-        title: new Text("Progress"),
-      ),
+      appBar:  AppBar(
+        title:  Text("Progress"),
+      ), 
+      drawer: NavbarDrawer(),
       body: Center(
         child: ListView(children: <Widget>[
-          new CircularPercentIndicator(
+          SizedBox(height:30.0),
+           CircularPercentIndicator(
             radius: 120.0,
             lineWidth: 13.0,
-            header: new Text("Book Progress"),
+            header:  Text("Book Progress"),
             animationDuration: 1200,
             animation: true,
             percent: _decimal,
-            center: new Text(
+            center:  Text(
               "$_percentage%",
-              style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
-            ),
-            footer: new Text(
-              "You have completed\n $completedCount of $count books \n on your reading list",
-              style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 17.0),
+              style: bodyText,
             ),
             circularStrokeCap: CircularStrokeCap.round,
-            progressColor: Colors.purple,
+            progressColor: Colors.blue,
           ),
+          SizedBox(height:10.0),
+          TextSection("Summary ", "You have completed $completedCount of $count books in your reading list")
+          
         ]),
       ),
     );

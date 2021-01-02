@@ -32,4 +32,12 @@ const BodyTextStyle = TextStyle(
     fontFamily: FontFamily,
     fontWeight: FontWeight.w300,
     fontSize: SmallTextSize,
-    color: Colors.black);
+    color: Colors.black
+);
+
+const LinkTextStyle = TextStyle(
+    fontFamily: FontFamily,
+    fontWeight: FontWeight.w300,
+    fontSize: SmallTextSize,
+    color: Colors.blue
+);

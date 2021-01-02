@@ -56,6 +56,17 @@ class DatabaseHelper {
     var result = await db.query(bookTable, orderBy: '$status ASC');
     return result;
   }
+
+    // Get all book objects from db
+
+  Future<List<Map<String, dynamic>>> getCompletedBookMapList() async {
+    Database db = await this.database;
+
+    // var result = await db.rawQuery('SELECT * FROM  $bookTable ORDER BY $status ASC')
+    var result = await db.query(bookTable, orderBy: '$status ASC', where: '$status = 3');
+    return result;
+  }
+
   // Insert book into db
 
   Future<int> insertBook(Book book) async {
@@ -95,6 +106,20 @@ class DatabaseHelper {
   // Get Map List and convert it to Book List
   Future<List<Book>> getBookList() async {
     var bookMapList = await getBookMapList();
+    int count = bookMapList.length;
+
+    List<Book> bookList = List<Book>();
+
+    for (int i = 0; i < count; i++) {
+      bookList.add(Book.fromMapObject(bookMapList[i]));
+    }
+
+    return bookList;
+  }
+
+    // Get Map List and convert it to Book List
+  Future<List<Book>> getCompletedBookList() async {
+    var bookMapList = await getCompletedBookMapList();
     int count = bookMapList.length;
 
     List<Book> bookList = List<Book>();

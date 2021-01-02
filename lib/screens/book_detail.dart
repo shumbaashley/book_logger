@@ -1,4 +1,5 @@
 import 'package:book_logger/models/book.dart';
+import 'package:book_logger/style.dart';
 import 'package:book_logger/utils/helper.dart';
 import 'package:book_logger/widgets/navdrawer.dart';
 import 'package:flutter/material.dart';
@@ -112,7 +113,7 @@ class _BookDetailState extends State<BookDetail> {
                       child: RaisedButton(
                         padding: EdgeInsets.all(8.0),
                         color: Theme.of(context).primaryColorDark,
-                        textColor: Colors.white,
+                        textColor: Colors.blue,
                         child: Text(
                           'Save',
                           textScaleFactor: 1.5,
@@ -229,7 +230,7 @@ class _BookDetailState extends State<BookDetail> {
 
   void _showAlertDialog(String title, String message) {
     AlertDialog alertDialog = AlertDialog(
-      title: Text(title),
+      title: Text(title, style: TitleTextStyle,),
       content: Text(message),
     );
     showDialog(context: context, builder: (_) => alertDialog);

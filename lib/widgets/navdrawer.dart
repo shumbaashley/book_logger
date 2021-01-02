@@ -32,15 +32,15 @@ class NavbarDrawer extends StatelessWidget {
           },
         ),
         ListTile(
-          leading: Icon(Icons.border_color),
-          title: Text('Progress'),
+          leading: Icon(Icons.pie_chart),
+          title: Text('My Progress'),
           onTap: () {
             Navigator.push(context, MaterialPageRoute(builder: (context) => Progress()));
           },
         ),
         ListTile(
           leading: Icon(Icons.input),
-          title: Text('Info'),
+          title: Text('About'),
           onTap: () {
             Navigator.push(context, MaterialPageRoute(builder: (context) => About()));
           },

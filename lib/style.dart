@@ -18,6 +18,13 @@ const NavBarTextStyle = TextStyle(
     color: Colors.white
 );
 
+const TitleTextStyle = TextStyle(
+    fontFamily: FontFamily,
+    fontWeight: FontWeight.w300,
+    fontSize: LargeTextSize,
+    color: Colors.black
+);
+
 
 const BodyTextStyle = TextStyle(
     fontFamily: FontFamily,

@@ -23,6 +23,7 @@ class MyApp extends StatelessWidget {
         ),
         textTheme: TextTheme(
           headline6: AppBarTextStyle,
+          headline5: TitleTextStyle,
           bodyText2 : BodyTextStyle,
           subtitle1 : BodyTextStyle
         )

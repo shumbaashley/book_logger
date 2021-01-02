@@ -56,9 +56,10 @@ class _BookDetailState extends State<BookDetail> {
             child: ListView(
               children: <Widget>[
                 ListTile(
-                    title: DropdownButton(
-                  items: _statuses.map((String statusItem) {
-                    return DropdownMenuItem<String>(
+                    title: DropdownButtonHideUnderline(
+                    child: DropdownButton(
+                      items: _statuses.map((String statusItem) {
+                      return DropdownMenuItem<String>(
                       value: statusItem,
                       child: Text(statusItem),
                     );
@@ -71,7 +72,7 @@ class _BookDetailState extends State<BookDetail> {
                       updateStatusAsInt(valueSelected);
                     });
                   },
-                )),
+                ))),
                 Padding(
                   padding: EdgeInsets.only(top: 15.0, bottom: 15.0),
                   child: TextField(

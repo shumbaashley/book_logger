@@ -1,4 +1,6 @@
+import 'package:book_logger/screens/about.dart';
 import 'package:book_logger/screens/book_list.dart';
+import 'package:book_logger/screens/progress.dart';
 import 'package:flutter/material.dart';
 
 import '../style.dart';
@@ -24,6 +26,7 @@ class NavbarDrawer extends StatelessWidget {
           ),
         ),
         ListTile(
+          leading: Icon(Icons.list_alt),
           title: Text('Reading List'),
           onTap: () {
             Navigator.push(context, MaterialPageRoute(builder: (context) => BookList()));
@@ -33,20 +36,14 @@ class NavbarDrawer extends StatelessWidget {
           leading: Icon(Icons.input),
           title: Text('About'),
           onTap: () {
-            // Update the state of the app
-            // ...
-            // Then close the drawer
-            Navigator.pop(context);
+            Navigator.push(context, MaterialPageRoute(builder: (context) => About()));
           },
         ),
         ListTile(
           leading: Icon(Icons.border_color),
           title: Text('Progress'),
           onTap: () {
-            // Update the state of the app
-            // ...
-            // Then close the drawer
-            Navigator.pop(context);
+            Navigator.push(context, MaterialPageRoute(builder: (context) => Progress()));
           },
         ),
       ],

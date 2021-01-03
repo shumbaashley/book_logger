@@ -5,6 +5,12 @@ import 'package:book_logger/widgets/navdrawer.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+class ListItem {
+  int value;
+  String name;
+  ListItem(this.value, this.name);
+}
+
 class BookDetail extends StatefulWidget {
   final String appBarTitle;
   final Book book;
@@ -18,6 +24,21 @@ class BookDetail extends StatefulWidget {
 class _BookDetailState extends State<BookDetail> {
   DatabaseHelper databaseHelper = DatabaseHelper();
 
+  List<ListItem> _dropdownItems = [
+    ListItem(1, "Haven't started reading it yet"),
+    ListItem(2, "Currently reading it..."),
+    ListItem(3, "Finished reading!"),
+  ];
+
+  List<DropdownMenuItem<ListItem>> _dropdownMenuItems;
+  ListItem _selectedItem;
+
+  void initState() {
+    super.initState();
+    _dropdownMenuItems = buildDropDownMenuItems(_dropdownItems);
+    _selectedItem = _dropdownMenuItems[0].value;
+  }
+
   String appBarTitle;
   Book book;
   _BookDetailState(this.book, this.appBarTitle);
@@ -25,11 +46,6 @@ class _BookDetailState extends State<BookDetail> {
 
   TextEditingController bookTitle = TextEditingController();
   TextEditingController bookAuthor = TextEditingController();
-  static const _statuses = [
-    "Haven't started yet",
-    "Currently In Progress",
-    "Completed/Done"
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +53,9 @@ class _BookDetailState extends State<BookDetail> {
 
     bookTitle.text = book.title;
     bookAuthor.text = book.author;
+    if (book.status != null) {
+      _selectedItem = _dropdownMenuItems[book.status - 1].value;
+    }
 
     return WillPopScope(
         onWillPop: () {
@@ -59,23 +78,6 @@ class _BookDetailState extends State<BookDetail> {
                 padding: EdgeInsets.only(top: 15.0, left: 10.0, right: 10.0),
                 child: ListView(
                   children: <Widget>[
-                    ListTile(
-                        title: DropdownButton(
-                      items: _statuses.map((String statusItem) {
-                        return DropdownMenuItem<String>(
-                          value: statusItem,
-                          child: Text(statusItem),
-                        );
-                      }).toList(),
-                      value: getStatusAsString(book.status),
-                      style: textStyle,
-                      onChanged: (valueSelected) {
-                        setState(() {
-                          debugPrint('User selected $valueSelected');
-                          updateStatusAsInt(valueSelected);
-                        });
-                      },
-                    )),
                     Padding(
                       padding: EdgeInsets.only(top: 15.0, bottom: 15.0),
                       child: TextFormField(
@@ -87,14 +89,15 @@ class _BookDetailState extends State<BookDetail> {
                         controller: bookTitle,
                         style: textStyle,
                         onChanged: (value) {
-                          debugPrint('Something is being typed');
                           updateTitle();
                         },
                         decoration: InputDecoration(
                             labelText: 'Book Title',
                             labelStyle: textStyle,
-                            errorStyle:
-                                TextStyle(fontFamily: "Roboto", fontSize: 14.0, color: Colors.red),
+                            errorStyle: TextStyle(
+                                fontFamily: "Roboto",
+                                fontSize: 14.0,
+                                color: Colors.red),
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(5.0))),
                       ),
@@ -110,7 +113,6 @@ class _BookDetailState extends State<BookDetail> {
                         controller: bookAuthor,
                         style: textStyle,
                         onChanged: (value) {
-                          debugPrint('Something is being typed');
                           updateAuthor();
                         },
                         decoration: InputDecoration(
@@ -169,34 +171,8 @@ class _BookDetailState extends State<BookDetail> {
         ));
   }
 
-  void updateStatusAsInt(String value) {
-    switch (value) {
-      case "Haven't yet started":
-        book.status = 1;
-        break;
-      case "In Progress":
-        book.status = 2;
-        break;
-      case "Completed":
-        book.status = 3;
-        break;
-    }
-  }
-
-  String getStatusAsString(int value) {
-    String status = _statuses[0];
-    switch (value) {
-      case 1:
-        status = _statuses[0];
-        break;
-      case 2:
-        status = _statuses[1];
-        break;
-      case 3:
-        status = _statuses[2];
-        break;
-    }
-    return status;
+  void updateStatus() {
+    book.status = _selectedItem.value;
   }
 
   void updateTitle() {
@@ -256,5 +232,18 @@ class _BookDetailState extends State<BookDetail> {
 
   void moveToLastScreen() {
     Navigator.pop(context, true);
+  }
+
+  List<DropdownMenuItem<ListItem>> buildDropDownMenuItems(List listItems) {
+    List<DropdownMenuItem<ListItem>> items = List();
+    for (ListItem listItem in listItems) {
+      items.add(
+        DropdownMenuItem(
+          child: Text(listItem.name),
+          value: listItem,
+        ),
+      );
+    }
+    return items;
   }
 }

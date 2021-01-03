@@ -42,7 +42,6 @@ class BookListState extends State<BookList> {
   Widget getBookList() {
     TextStyle bodyText = Theme.of(context).textTheme.subtitle1;
     TextStyle bodyText2 = Theme.of(context).textTheme.subtitle2;
-    TextStyle titleText = Theme.of(context).textTheme.headline5;
 
     return count == 0
         ? Column(
@@ -50,15 +49,9 @@ class BookListState extends State<BookList> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Padding(
-            padding: EdgeInsets.fromLTRB(16, 0.0, 16, 4.0),
-            child: Text(
-              "Welcome",
-              style: titleText,
-            )),
-            Padding(
             padding: EdgeInsets.fromLTRB(16, 10.0, 16, 16.0),
             child: Text(
-              "You currently have no books in your reading list. Tap the add button to get started",
+              "You currently have no books in your reading list. Tap the add button to add one",
               style: bodyText2,
             ))],
           )

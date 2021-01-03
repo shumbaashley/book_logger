@@ -11,7 +11,8 @@ class About extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(title: Text('About Us')),
         drawer: NavbarDrawer(),
-        body:Column(
+        body: SingleChildScrollView(
+          child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -21,7 +22,7 @@ class About extends StatelessWidget {
                 child: Image.asset('images/about_image.jpg', fit: BoxFit.cover),
               ),
               TextSection(
-                'About Us',
+                'About',
                 'Book Logger is a user friendly reading app which acts as your companion to help you keep track of your book reading progress. You get to add books to your reading list and marked each stage of the book you are at. Our app will assist you in developing good reading habits as well as meet your completion targets.'
               ),
 
@@ -69,6 +70,6 @@ class About extends StatelessWidget {
                       }
                   
                 })),
-            ]));                       
+            ])));                       
   }
 }

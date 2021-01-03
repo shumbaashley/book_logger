@@ -124,6 +124,20 @@ class _BookDetailState extends State<BookDetail> {
                     ),
                     Padding(
                       padding: EdgeInsets.only(top: 15.0, bottom: 15.0),
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton(
+                            value: _selectedItem,
+                            items: _dropdownMenuItems,
+                            onChanged: (value) {
+                              setState(() {
+                                _selectedItem = value;
+                                updateStatus();
+                              });
+                            }),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 15.0, bottom: 15.0),
                       child: Row(children: <Widget>[
                         Expanded(
                           child: RaisedButton(

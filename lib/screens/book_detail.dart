@@ -21,6 +21,7 @@ class _BookDetailState extends State<BookDetail> {
   String appBarTitle;
   Book book;
   _BookDetailState(this.book, this.appBarTitle);
+  var _formKey = GlobalKey<FormState>();
 
   TextEditingController bookTitle = TextEditingController();
   TextEditingController bookAuthor = TextEditingController();
@@ -52,104 +53,119 @@ class _BookDetailState extends State<BookDetail> {
             ),
           ),
           drawer: NavbarDrawer(),
-          body: Padding(
-            padding: EdgeInsets.only(top: 15.0, left: 10.0, right: 10.0),
-            child: ListView(
-              children: <Widget>[
-                ListTile(
-                    title:DropdownButton(
+          body: Form(
+              key: _formKey,
+              child: Padding(
+                padding: EdgeInsets.only(top: 15.0, left: 10.0, right: 10.0),
+                child: ListView(
+                  children: <Widget>[
+                    ListTile(
+                        title: DropdownButton(
                       items: _statuses.map((String statusItem) {
-                      return DropdownMenuItem<String>(
-                      value: statusItem,
-                      child: Text(statusItem),
-                    );
-                  }).toList(),
-                  value: getStatusAsString(book.status),
-                  style: textStyle,
-                  onChanged: (valueSelected) {
-                    setState(() {
-                      debugPrint('User selected $valueSelected');
-                      updateStatusAsInt(valueSelected);
-                    });
-                  },
-                )),
-                Padding(
-                  padding: EdgeInsets.only(top: 15.0, bottom: 15.0),
-                  child: TextField(
-                    controller: bookTitle,
-                    style: textStyle,
-                    onChanged: (value) {
-                      debugPrint('Something is being typed');
-                      updateTitle();
-                    },
-                    decoration: InputDecoration(
-                        labelText: 'Book Title',
-                        labelStyle: textStyle,
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5.0))),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: 15.0, bottom: 15.0),
-                  child: TextField(
-                    controller: bookAuthor,
-                    style: textStyle,
-                    onChanged: (value) {
-                      debugPrint('Something is being typed');
-                      updateAuthor();
-                    },
-                    decoration: InputDecoration(
-                        labelText: 'Book Author',
-                        labelStyle: textStyle,
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5.0))),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: 15.0, bottom: 15.0),
-                  child: Row(children: <Widget>[
-                    Expanded(
-                      child: RaisedButton(
-                        padding: EdgeInsets.all(8.0),
-                        color: Colors.blue,
-                        textColor: Colors.white,
-                        child: Text(
-                          'Save',
-                          textScaleFactor: 1.5,
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            debugPrint("Save button clicked");
-                            _save();
-                          });
+                        return DropdownMenuItem<String>(
+                          value: statusItem,
+                          child: Text(statusItem),
+                        );
+                      }).toList(),
+                      value: getStatusAsString(book.status),
+                      style: textStyle,
+                      onChanged: (valueSelected) {
+                        setState(() {
+                          debugPrint('User selected $valueSelected');
+                          updateStatusAsInt(valueSelected);
+                        });
+                      },
+                    )),
+                    Padding(
+                      padding: EdgeInsets.only(top: 15.0, bottom: 15.0),
+                      child: TextFormField(
+                        validator: (String value) {
+                          if (value.isEmpty) {
+                            return "Please enter the book title";
+                          }
                         },
+                        controller: bookTitle,
+                        style: textStyle,
+                        onChanged: (value) {
+                          debugPrint('Something is being typed');
+                          updateTitle();
+                        },
+                        decoration: InputDecoration(
+                            labelText: 'Book Title',
+                            labelStyle: textStyle,
+                            errorStyle:
+                                TextStyle(fontFamily: "Roboto", fontSize: 14.0, color: Colors.red),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5.0))),
                       ),
                     ),
-                    Container(
-                      width: 5.0,
-                    ),
-                    Expanded(
-                      child: RaisedButton(
-                        padding: EdgeInsets.all(8.0),
-                        color: Colors.red,
-                        textColor: Colors.white,
-                        child: Text(
-                          'Delete',
-                          textScaleFactor: 1.5,
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            debugPrint("Delete button clicked");
-                            _delete();
-                          });
+                    Padding(
+                      padding: EdgeInsets.only(top: 15.0, bottom: 15.0),
+                      child: TextFormField(
+                        validator: (String value) {
+                          if (value.isEmpty) {
+                            return "Please enter the book author";
+                          }
                         },
+                        controller: bookAuthor,
+                        style: textStyle,
+                        onChanged: (value) {
+                          debugPrint('Something is being typed');
+                          updateAuthor();
+                        },
+                        decoration: InputDecoration(
+                            labelText: 'Book Author',
+                            labelStyle: textStyle,
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5.0))),
                       ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 15.0, bottom: 15.0),
+                      child: Row(children: <Widget>[
+                        Expanded(
+                          child: RaisedButton(
+                            padding: EdgeInsets.all(8.0),
+                            color: Colors.blue,
+                            textColor: Colors.white,
+                            child: Text(
+                              'Save',
+                              textScaleFactor: 1.5,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                if (_formKey.currentState.validate()) {
+                                  _save();
+                                }
+                              });
+                            },
+                          ),
+                        ),
+                        Container(
+                          width: 5.0,
+                        ),
+                        Expanded(
+                          child: RaisedButton(
+                            padding: EdgeInsets.all(8.0),
+                            color: Colors.red,
+                            textColor: Colors.white,
+                            child: Text(
+                              'Delete',
+                              textScaleFactor: 1.5,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                debugPrint("Delete button clicked");
+                                _delete();
+                              });
+                            },
+                          ),
+                        )
+                      ]),
                     )
-                  ]),
-                )
-              ],
-            ),
-          ),
+                  ],
+                ),
+              )),
         ));
   }
 
@@ -229,7 +245,10 @@ class _BookDetailState extends State<BookDetail> {
 
   void _showAlertDialog(String title, String message) {
     AlertDialog alertDialog = AlertDialog(
-      title: Text(title, style: TitleTextStyle,),
+      title: Text(
+        title,
+        style: TitleTextStyle,
+      ),
       content: Text(message),
     );
     showDialog(context: context, builder: (_) => alertDialog);

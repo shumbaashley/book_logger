@@ -25,7 +25,8 @@ class MyApp extends StatelessWidget {
           headline6: AppBarTextStyle,
           headline5: TitleTextStyle,
           bodyText2 : BodyTextStyle,
-          subtitle1 : BodyTextStyle
+          subtitle1 : BodyTextStyle,
+          subtitle2: BodyText2Style
         )
       ),
       home: SplashWidget(),

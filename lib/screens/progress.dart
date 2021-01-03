@@ -24,8 +24,6 @@ class _ProgressState extends State<Progress> {
 
   @override
   Widget build(BuildContext context) {
-    TextStyle bodyText = Theme.of(context).textTheme.subtitle1;
-
     if (bookList == null || completedBookList == null) {
       bookList = List<Book>();
       completedBookList = List<Book>();
@@ -33,33 +31,52 @@ class _ProgressState extends State<Progress> {
     }
 
     return Scaffold(
-      appBar:  AppBar(
-        title:  Text("Progress"),
-      ), 
-      drawer: NavbarDrawer(),
-      body: Center(
-        child: ListView(children: <Widget>[
-          SizedBox(height:30.0),
-           CircularPercentIndicator(
-            radius: 120.0,
-            lineWidth: 13.0,
-            header:  Text("Book Progress"),
-            animationDuration: 1200,
-            animation: true,
-            percent: _decimal,
-            center:  Text(
-              "$_percentage%",
-              style: bodyText,
-            ),
-            circularStrokeCap: CircularStrokeCap.round,
-            progressColor: Colors.blue,
-          ),
-          SizedBox(height:10.0),
-          TextSection("Summary ", "You have completed $completedCount of $count books in your reading list")
-          
-        ]),
-      ),
-    );
+        appBar: AppBar(
+          title: Text("Progress"),
+        ),
+        drawer: NavbarDrawer(),
+        body: getProgressChart());
+  }
+
+  Widget getProgressChart() {
+    TextStyle bodyText = Theme.of(context).textTheme.subtitle1;
+    TextStyle bodyText2 = Theme.of(context).textTheme.subtitle2;
+
+    return count == 0
+        ? Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+                Container(
+                  padding: EdgeInsets.fromLTRB(16.0, 0.0, 16, 0.0),
+                  child: Text(
+                    "You currently have no books in your reading list.",
+                    style: bodyText2,
+                  ),
+                )
+              ])
+        : Center(
+            child: ListView(children: <Widget>[
+              SizedBox(height: 30.0),
+              CircularPercentIndicator(
+                radius: 120.0,
+                lineWidth: 13.0,
+                header: Text("Book Progress"),
+                animationDuration: 1200,
+                animation: true,
+                percent: _decimal,
+                center: Text(
+                  "$_percentage%",
+                  style: bodyText,
+                ),
+                circularStrokeCap: CircularStrokeCap.round,
+                progressColor: Colors.blue,
+              ),
+              SizedBox(height: 10.0),
+              TextSection("Summary ",
+                  "You have completed $completedCount of $count books in your reading list")
+            ]),
+          );
   }
 
   void updateListView() async {

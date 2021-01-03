@@ -41,3 +41,10 @@ const LinkTextStyle = TextStyle(
     fontSize: SmallTextSize,
     color: Colors.blue
 );
+
+const BodyText2Style = TextStyle(
+    fontFamily: FontFamily,
+    fontWeight: FontWeight.w300,
+    fontSize: MediumTextSize,
+    color: Colors.black
+);

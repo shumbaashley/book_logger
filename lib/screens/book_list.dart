@@ -5,7 +5,6 @@ import 'package:sqflite/sqflite.dart';
 import 'package:book_logger/screens/book_detail.dart';
 import 'package:flutter/material.dart';
 
-
 class BookList extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -27,7 +26,7 @@ class BookListState extends State<BookList> {
 
     return Scaffold(
       appBar: AppBar(title: Text('Book Reading List')),
-      body: getBookListView(),
+      body: getBookList(),
       drawer: NavbarDrawer(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -40,41 +39,62 @@ class BookListState extends State<BookList> {
     );
   }
 
-  ListView getBookListView() {
-    TextStyle titleStyle = Theme.of(context).textTheme.subtitle1;
+  Widget getBookList() {
+    TextStyle bodyText = Theme.of(context).textTheme.subtitle1;
+    TextStyle bodyText2 = Theme.of(context).textTheme.subtitle2;
+    TextStyle titleText = Theme.of(context).textTheme.headline5;
 
-    return ListView.builder(
-      itemCount: count,
-      itemBuilder: (BuildContext context, int position) {
-        return Card(
-          color: Colors.white,
-          elevation: 2.0,
-          child: ListTile(
-            leading: CircleAvatar(
-                backgroundColor: getStatusColor(this.bookList[position].status),
-                child: getStatusIcon(this.bookList[position].status)),
-            title: Text(
-              this.bookList[position].title,
-              style: titleStyle,
-            ),
-            subtitle: Text(this.bookList[position].dateAdded),
-            trailing: GestureDetector(
-                child: Icon(
-                  Icons.edit,
-                  color: Colors.grey,
+    return count == 0
+        ? Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Padding(
+            padding: EdgeInsets.fromLTRB(16, 0.0, 16, 4.0),
+            child: Text(
+              "Welcome",
+              style: titleText,
+            )),
+            Padding(
+            padding: EdgeInsets.fromLTRB(16, 10.0, 16, 16.0),
+            child: Text(
+              "You currently have no books in your reading list. Tap the add button to get started",
+              style: bodyText2,
+            ))],
+          )
+        : ListView.builder(
+            itemCount: count,
+            itemBuilder: (BuildContext context, int position) {
+              return Card(
+                color: Colors.white,
+                elevation: 2.0,
+                child: ListTile(
+                  leading: CircleAvatar(
+                      backgroundColor:
+                          getStatusColor(this.bookList[position].status),
+                      child: getStatusIcon(this.bookList[position].status)),
+                  title: Text(
+                    this.bookList[position].title,
+                    style: bodyText,
+                  ),
+                  subtitle: Text(this.bookList[position].dateAdded),
+                  trailing: GestureDetector(
+                      child: Icon(
+                        Icons.edit,
+                        color: Colors.grey,
+                      ),
+                      onTap: () {
+                        print(this.bookList[position].id);
+                        goToDetail(this.bookList[position], 'Edit Book');
+                      }),
+                  onTap: () {
+                    print('Card Tapped');
+                    goToDetail(this.bookList[position], 'Edit Book');
+                  },
                 ),
-                onTap: () {
-                  print(this.bookList[position].id);
-                  goToDetail(this.bookList[position], 'Edit Book');
-                }),
-            onTap: () {
-              print('Card Tapped');
-              goToDetail(this.bookList[position], 'Edit Book');
+              );
             },
-          ),
-        );
-      },
-    );
+          );
   }
 
   Color getStatusColor(int status) {

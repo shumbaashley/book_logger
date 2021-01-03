@@ -39,7 +39,7 @@ class NavbarDrawer extends StatelessWidget {
           },
         ),
         ListTile(
-          leading: Icon(Icons.input),
+          leading: Icon(Icons.info_outline),
           title: Text('About'),
           onTap: () {
             Navigator.push(context, MaterialPageRoute(builder: (context) => About()));

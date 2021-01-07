@@ -66,7 +66,7 @@ class _ProgressState extends State<Progress> {
                 animation: true,
                 percent: _decimal,
                 center: Text(
-                  "$_percentage%",
+                  "{$_percentage.toStringAsFixed(3)}%",
                   style: bodyText,
                 ),
                 circularStrokeCap: CircularStrokeCap.round,

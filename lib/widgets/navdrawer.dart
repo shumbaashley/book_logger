@@ -1,15 +1,15 @@
 import 'package:book_logger/screens/about.dart';
+import 'package:book_logger/screens/best_seller.dart';
 import 'package:book_logger/screens/book_list.dart';
 import 'package:book_logger/screens/progress.dart';
 import 'package:flutter/material.dart';
 import '../style.dart';
 
 class NavbarDrawer extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      child: ListView(
+        child: ListView(
       padding: EdgeInsets.zero,
       children: <Widget>[
         DrawerHeader(
@@ -20,29 +20,39 @@ class NavbarDrawer extends StatelessWidget {
           decoration: BoxDecoration(
             color: Colors.blueGrey,
             image: DecorationImage(
-            fit: BoxFit.fill,
-            image: AssetImage('images/navbar_cover.jpg')),
+                fit: BoxFit.fill, image: AssetImage('images/navbar_cover.jpg')),
           ),
         ),
         ListTile(
           leading: Icon(Icons.list_alt),
           title: Text('Reading List'),
           onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => BookList()));
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => BookList()));
+          },
+        ),
+        ListTile(
+          leading: Icon(Icons.my_library_books),
+          title: Text('NYT Best Sellers List'),
+          onTap: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => BestSellerList()));
           },
         ),
         ListTile(
           leading: Icon(Icons.pie_chart),
           title: Text('My Progress'),
           onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => Progress()));
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => Progress()));
           },
         ),
         ListTile(
           leading: Icon(Icons.info_outline),
           title: Text('About'),
           onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => About()));
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => About()));
           },
         ),
       ],

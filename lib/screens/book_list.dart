@@ -49,9 +49,15 @@ class BookListState extends State<BookList> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Padding(
+            padding: EdgeInsets.fromLTRB(32.0, 10.0, 32.0, 16.0),
+            child: Text(
+              "You currently have no books in your reading list.",
+              style: bodyText2,
+            )),
+            Padding(
             padding: EdgeInsets.fromLTRB(16, 10.0, 16, 16.0),
             child: Text(
-              "You currently have no books in your reading list. Tap the add button to add one",
+              "Tap the add button to add one",
               style: bodyText2,
             ))],
           )

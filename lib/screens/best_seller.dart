@@ -1,6 +1,6 @@
 import 'dart:convert';
+import 'package:book_logger/models/nytbook.dart';
 import 'package:book_logger/utils/api.dart';
-import 'package:book_logger/models/user.dart';
 import 'package:flutter/material.dart';
 
 
@@ -10,20 +10,21 @@ class BestSellerList extends StatefulWidget {
 }
 
 class _BestSellerListState extends State {
-  var users = new List<User>();
+  var books = new List<NYTBook>();
 
-  _getUsers() {
-    API.getUsers().then((response) {
+  _getBooks() {
+    API.getBooks().then((response) {
       setState(() {
-        Iterable list = json.decode(response.body);
-        users = list.map((model) => User.fromJson(model)).toList();
+        var res = json.decode(response.body);
+        Iterable list = res["results"]["lists"][0]["books"];
+        books = list.map((model) => NYTBook.fromJson(model)).toList();
       });
     });
   }
 
   initState() {
     super.initState();
-    _getUsers();
+    _getBooks();
   }
 
   dispose() {
@@ -32,27 +33,27 @@ class _BestSellerListState extends State {
 
   @override
   build(context) {
-        TextStyle bodyText = Theme.of(context).textTheme.subtitle1;
+    TextStyle bodyText = Theme.of(context).textTheme.subtitle1;
 
     return Scaffold(
         appBar: AppBar(
-          title: Text("Best Sellers List"),
+          title: Text("NYT Best Sellers"),
         ),
         body: ListView.builder(
-            itemCount: users.length,
-            itemBuilder: (BuildContext context, int position) {
-              return Card(
-                color: Colors.white,
-                elevation: 2.0,
-                child: ListTile(
-                  title: Text(
-                    users[position].name,
-                    style: bodyText,
-                  ),
-                  subtitle: Text("subtitle"),
+          itemCount: books.length,
+          itemBuilder: (BuildContext context, int position) {
+            return Card(
+              color: Colors.white,
+              elevation: 2.0,
+              child: ListTile(
+                title: Text(
+                  books[position].title,
+                  style: bodyText,
                 ),
-              );
-            },
-          ));
+                subtitle: Text(books[position].author),
+              ),
+            );
+          },
+        ));
   }
 }

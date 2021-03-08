@@ -2,6 +2,7 @@ import 'package:book_logger/screens/about.dart';
 import 'package:book_logger/screens/best_seller.dart';
 import 'package:book_logger/screens/book_list.dart';
 import 'package:book_logger/screens/progress.dart';
+import 'package:book_logger/screens/test_listing.dart';
 import 'package:flutter/material.dart';
 import '../style.dart';
 
@@ -25,7 +26,7 @@ class NavbarDrawer extends StatelessWidget {
         ),
         ListTile(
           leading: Icon(Icons.list_alt),
-          title: Text('Reading List'),
+          title: Text('My Reads'),
           onTap: () {
             Navigator.push(
                 context, MaterialPageRoute(builder: (context) => BookList()));
@@ -33,10 +34,10 @@ class NavbarDrawer extends StatelessWidget {
         ),
         ListTile(
           leading: Icon(Icons.my_library_books),
-          title: Text('NYT Best Sellers List'),
+          title: Text('Best Sellers'),
           onTap: () {
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => BestSellerList()));
+                MaterialPageRoute(builder: (context) => TestListing()));
           },
         ),
         ListTile(
